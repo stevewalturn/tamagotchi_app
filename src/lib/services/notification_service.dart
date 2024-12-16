@@ -1,32 +1,30 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:tamagotchi_app/models/pet.dart';
+import '../models/pet.dart';
 
 class NotificationService {
-  final FlutterLocalNotificationsPlugin _notifications =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
   bool _isInitialized = false;
 
   Future<void> initialize() async {
     if (_isInitialized) return;
 
-    const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    const iosSettings = DarwinInitializationSettings(
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettingsDarwin = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
 
-    const initSettings = InitializationSettings(
-      android: androidSettings,
-      iOS: iosSettings,
+    const initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsDarwin,
     );
 
     try {
-      await _notifications.initialize(initSettings);
+      await _notifications.initialize(initializationSettings);
       _isInitialized = true;
     } catch (e) {
-      throw 'Failed to initialize notifications. Some features may not work properly.';
+      throw Exception('Failed to initialize notifications. Some features may not work properly.');
     }
   }
 
@@ -77,11 +75,11 @@ class NotificationService {
         'tamagotchi_pet_care',
         'Pet Care Notifications',
         channelDescription: 'Notifications for pet care needs',
-        importance: Importance.high,
+        importance: Importance.max,
         priority: Priority.high,
       );
 
-      const iosDetails = DarwinNotificationDetails(
+      const darwinDetails = DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
@@ -89,7 +87,7 @@ class NotificationService {
 
       const details = NotificationDetails(
         android: androidDetails,
-        iOS: iosDetails,
+        iOS: darwinDetails,
       );
 
       await _notifications.show(
@@ -99,7 +97,7 @@ class NotificationService {
         details,
       );
     } catch (e) {
-      throw 'Unable to show notification. Please check your notification settings.';
+      throw Exception('Unable to show notification. Please check your notification settings.');
     }
   }
 }

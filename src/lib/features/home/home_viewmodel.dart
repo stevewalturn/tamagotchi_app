@@ -3,10 +3,13 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tamagotchi_app/app/app.locator.dart';
 import 'package:tamagotchi_app/app/app.router.dart';
 import 'package:tamagotchi_app/services/pet_service.dart';
+import 'package:tamagotchi_app/enums/dialog_type.dart';
+import 'package:tamagotchi_app/enums/bottom_sheet_type.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
+  final _bottomSheetService = locator<BottomSheetService>();
   final _petService = locator<PetService>();
 
   bool get hasPet => _petService.currentPet != null;
@@ -53,7 +56,6 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void showBottomSheet() {
-    // Preserve existing bottom sheet functionality
     _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.notice,
       title: 'Pet Care Guide',
