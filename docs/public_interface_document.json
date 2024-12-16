@@ -1064,6 +1064,20 @@
       "class_diagram": "@startuml\nclass Auto\n@enduml",
       "methods": [],
       "dependencies": []
+    },
+    {
+      "name": "lib/enums/dialog_type.dart",
+      "description": "This file defines an enum called `DialogType` that represents the different types of dialogs used in the application.",
+      "class_diagram": "@enums.DialogType",
+      "methods": [],
+      "dependencies": []
+    },
+    {
+      "name": "lib/enums/bottom_sheet_type.dart",
+      "description": "This file defines an enum called `BottomSheetType` which represents the different types of bottom sheets used in the application. The primary purpose of this file is to provide a centralized and consistent way of managing the various bottom sheet types in the application.",
+      "class_diagram": "@startuml\n\nenum BottomSheetType {\n    notice\n}\n\n@enduml",
+      "methods": [],
+      "dependencies": []
     }
   ],
   "dependencies": [
