@@ -1,20 +1,36 @@
-import 'package:tamagotchi_app/app/app.locator.dart';
-import 'package:tamagotchi_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:tamagotchi_app/app/app.locator.dart';
+import 'package:tamagotchi_app/app/app.router.dart';
+import 'package:tamagotchi_app/services/pet_service.dart';
+import 'package:tamagotchi_app/services/notification_service.dart';
 
 class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _petService = locator<PetService>();
+  final _notificationService = locator<NotificationService>();
 
-  // Place anything here that needs to happen before we get into the application
-  // ignore: strict_raw_type
-  Future runStartupLogic() async {
-    // ignore: inference_failure_on_instance_creation
-    await Future.delayed(const Duration(seconds: 1));
+  Future<void> runStartupLogic() async {
+    try {
+      setBusy(true);
 
-    // This is where you can make decisions on where your app should navigate when
-    // you have custom startup logic
+      // Initialize necessary services
+      await _notificationService.initialize();
 
-    await _navigationService.replaceWithHomeView();
+      // Simulate startup delay
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Update pet stats if exists
+      if (_petService.currentPet != null) {
+        await _petService.updatePetStats();
+      }
+
+      // Navigate to home view
+      await _navigationService.replaceWithHomeView();
+    } catch (e) {
+      setError('Unable to start the application. Please try again.');
+    } finally {
+      setBusy(false);
+    }
   }
 }

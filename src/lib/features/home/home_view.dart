@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:tamagotchi_app/ui/themes/app_theme.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -19,55 +19,59 @@ class HomeView extends StackedView<HomeViewModel> {
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Gap(50),
-                Column(
-                  children: [
-                    const Text(
-                      'Hello from STEVE x STACKED!',
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.w900,
+                Text(
+                  'Welcome to Tamagotchi',
+                  style: AppTheme.headlineStyle,
+                  textAlign: TextAlign.center,
+                ),
+                const Gap(20),
+                if (viewModel.hasError)
+                  Text(
+                    viewModel.modelError.toString(),
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                const Gap(40),
+                if (viewModel.hasPet)
+                  ElevatedButton(
+                    onPressed: viewModel.navigateToPetDetail,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
                       ),
                     ),
-                    const Gap(25),
-                    MaterialButton(
-                      color: Colors.black,
-                      onPressed: viewModel.incrementCounter,
-                      child: Text(
-                        viewModel.counterLabel,
-                        style: const TextStyle(color: Colors.white),
+                    child: const Text('View My Pet'),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: viewModel.createNewPet,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 16,
                       ),
+                    ),
+                    child: const Text('Create New Pet'),
+                  ),
+                const Gap(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton.icon(
+                      onPressed: viewModel.showDialog,
+                      icon: const Icon(Icons.help_outline),
+                      label: const Text('Help'),
+                    ),
+                    TextButton.icon(
+                      onPressed: viewModel.showBottomSheet,
+                      icon: const Icon(Icons.info_outline),
+                      label: const Text('Guide'),
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    MaterialButton(
-                      color: Colors.grey,
-                      onPressed: viewModel.showDialog,
-                      child: const Text(
-                        'Show Dialog',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                      color: Colors.grey,
-                      onPressed: viewModel.showBottomSheet,
-                      child: const Text(
-                        'Show Bottom Sheet',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
               ],
             ),
           ),
@@ -77,8 +81,5 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   @override
-  HomeViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      HomeViewModel();
+  HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
 }
