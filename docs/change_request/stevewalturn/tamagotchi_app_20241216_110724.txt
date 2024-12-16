@@ -1,0 +1,1 @@
+Design a Tamagotchi app that allows users to adopt, name, and care for a virtual pet. Key features include feeding, playing, and cleaning to maintain the pet's happiness, health, and energy levels. The app should have evolving stages (e.g., baby, adult) based on care, with notifications for attention needs. Incorporate a fun UI to keep users engaged.
