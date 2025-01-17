@@ -1078,6 +1078,22 @@
       "class_diagram": "@startuml\n\nenum BottomSheetType {\n    notice\n}\n\n@enduml",
       "methods": [],
       "dependencies": []
+    },
+    {
+      "name": "lib/firebase_options.dart",
+      "description": "Firebase configuration options for the application.",
+      "class_diagram": "@startuml\n            class DefaultFirebaseOptions {\n                + static FirebaseOptions get currentPlatform\n                - static FirebaseOptions web\n            }\n            @enduml",
+      "methods": [
+        {
+          "name": "currentPlatform",
+          "description": "Returns the Firebase configuration options for the current platform",
+          "parameters": null,
+          "return_type": "FirebaseOptions"
+        }
+      ],
+      "dependencies": [
+        "package:firebase_core/firebase_core.dart"
+      ]
     }
   ],
   "dependencies": [
